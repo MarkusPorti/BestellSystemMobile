@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">BestellSystem Mobile</string>
+
+    <string name="artikel_menge">%1$dx</string>
+    <string name="abholbereit">Abholbereit</string>
+    <string name="fertig">Fertig</string>
+
+    <plurals name="vergangene_zeit">
+        <item quantity="zero">Vor kurzem</item>
+        <item quantity="one">Vor %1$d Minute</item>
+        <item quantity="other">Vor %1$d Minuten</item>
+    </plurals>
+</resources>

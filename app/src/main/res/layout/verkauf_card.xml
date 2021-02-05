@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="6dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_margin="8dp">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textUhrzeit"
+                    android:layout_weight="1"
+                    tools:text="13:25"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textVergangeneZeit"
+                    android:layout_weight="2"
+                    tools:text="Vor 5 Minuten"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/listLayoutArtikel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"
+                android:showDividers="beginning|middle|end"
+                android:divider="@drawable/width_divider">
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:selectionRequired="false"
+                    app:singleSelection="true"
+                    >
+
+                <Button
+                        android:id="@+id/buttonAbholbereit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/abholbereit"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <Button
+                    android:id="@+id/buttonFertig"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fertig"
+                    style="@style/Widget.MaterialComponents.Button"
+                    app:icon="@drawable/ic_double_arrow_24"
+                    app:iconGravity="end
+"
+                    />
+
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
