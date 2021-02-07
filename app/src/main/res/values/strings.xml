@@ -4,6 +4,8 @@
     <string name="artikel_menge">%1$dx</string>
     <string name="abholbereit">Abholbereit</string>
     <string name="fertig">Fertig</string>
+    <string name="hinweis_verkauf_entfernt">Verkauf fertig und entfernt</string>
+    <string name="undo">Rückgängig</string>
 
     <plurals name="vergangene_zeit">
         <item quantity="zero">Vor kurzem</item>

@@ -7,7 +7,7 @@ import io.reactivex.Single;
 import java.util.List;
 
 @Dao
-public abstract class VerkaufDao {
+abstract class VerkaufDao {
 
 	@Transaction
 	@Query("SELECT * FROM verkauf")
@@ -29,4 +29,15 @@ public abstract class VerkaufDao {
 	@Insert
 	abstract void insertPositionen(List<VerkaufPosition> positionen);
 
+	@Transaction
+	public void delete(VerkaufWithPositionen verkauf) {
+		deletePositionen(verkauf.positionen);
+		deleteVerkauf(verkauf.verkauf);
+	}
+
+	@Delete
+	abstract void deleteVerkauf(Verkauf verkauf);
+
+	@Delete
+	abstract void deletePositionen(List<VerkaufPosition> positionen);
 }

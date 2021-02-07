@@ -3,7 +3,6 @@ package de.portugall.bestellsystem.android;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,10 +18,13 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.function.Consumer;
 
 public class VerkaufCardListAdapter extends ListAdapter<VerkaufWithPositionen, VerkaufCardListAdapter.VerkaufViewHolder> {
 
-	protected VerkaufCardListAdapter() {
+	private final Consumer<VerkaufWithPositionen> onDeleteCallback;
+
+	protected VerkaufCardListAdapter(Consumer<VerkaufWithPositionen> onDeleteCallback) {
 		super(new DiffUtil.ItemCallback<VerkaufWithPositionen>() {
 			@Override
 			public boolean areItemsTheSame(@NonNull VerkaufWithPositionen oldItem, @NonNull VerkaufWithPositionen newItem) {
@@ -34,12 +36,13 @@ public class VerkaufCardListAdapter extends ListAdapter<VerkaufWithPositionen, V
 				return oldItem.equals(newItem);
 			}
 		});
+		this.onDeleteCallback = onDeleteCallback;
 	}
 
 	@NonNull
 	@Override
 	public VerkaufCardListAdapter.VerkaufViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-		return VerkaufViewHolder.create(parent);
+		return new VerkaufViewHolder(parent);
 	}
 
 	@Override
@@ -47,7 +50,7 @@ public class VerkaufCardListAdapter extends ListAdapter<VerkaufWithPositionen, V
 		holder.bindTo(getCurrentList().get(position));
 	}
 
-	public static class VerkaufViewHolder extends RecyclerView.ViewHolder {
+	public class VerkaufViewHolder extends RecyclerView.ViewHolder {
 		private final TextView textUhrzeit;
 		private final TextView textVergangeneZeit;
 		private final LinearLayout listLayoutArtikel;
@@ -55,28 +58,24 @@ public class VerkaufCardListAdapter extends ListAdapter<VerkaufWithPositionen, V
 		private final MaterialButton buttonAbholbereit;
 		private VerkaufWithPositionen boundVerkauf;
 
-		public VerkaufViewHolder(@NonNull View view) {
-			super(view);
-			textUhrzeit = view.findViewById(R.id.textUhrzeit);
-			textVergangeneZeit = view.findViewById(R.id.textVergangeneZeit);
-			listLayoutArtikel = view.findViewById(R.id.listLayoutArtikel);
-			buttonFertig = view.findViewById(R.id.buttonFertig);
-			buttonAbholbereit = view.findViewById(R.id.buttonAbholbereit);
-			buttonAbholbereit.setOnClickListener(view1 -> {
+		public VerkaufViewHolder(@NonNull ViewGroup parent) {
+			super(LayoutInflater.from(parent.getContext()).inflate(R.layout.verkauf_card, parent, false));
+
+			textUhrzeit = itemView.findViewById(R.id.textUhrzeit);
+			textVergangeneZeit = itemView.findViewById(R.id.textVergangeneZeit);
+			listLayoutArtikel = itemView.findViewById(R.id.listLayoutArtikel);
+			buttonFertig = itemView.findViewById(R.id.buttonFertig);
+			buttonFertig.setOnClickListener(eventView -> VerkaufCardListAdapter.this.onDeleteCallback.accept(boundVerkauf));
+			buttonAbholbereit = itemView.findViewById(R.id.buttonAbholbereit);
+			buttonAbholbereit.setOnClickListener(eventView -> {
 				if (buttonAbholbereit.isChecked()) {
-					buttonAbholbereit.setIcon(view.getResources()
-												  .getDrawable(R.drawable.ic_baseline_check_24, view.getContext()
+					buttonAbholbereit.setIcon(itemView.getResources()
+												  .getDrawable(R.drawable.ic_baseline_check_24, itemView.getContext()
 																									.getTheme()));
 				} else {
 					buttonAbholbereit.setIcon(null);
 				}
 			});
-		}
-
-		static VerkaufViewHolder create(@NonNull ViewGroup parent) {
-			View view = LayoutInflater.from(parent.getContext())
-									  .inflate(R.layout.verkauf_card, parent, false);
-			return new VerkaufViewHolder(view);
 		}
 
 		public void bindTo(VerkaufWithPositionen verkaufWithPositionen) {
@@ -94,6 +93,7 @@ public class VerkaufCardListAdapter extends ListAdapter<VerkaufWithPositionen, V
 					});
 				}
 			}, 0, 10000);
+			listLayoutArtikel.removeAllViews();
 			for (VerkaufPosition verkaufPosition : verkaufWithPositionen.positionen) {
 				ArtikelItemView positionView = new ArtikelItemView(itemView.getContext(), verkaufPosition);
 				listLayoutArtikel.addView(positionView);

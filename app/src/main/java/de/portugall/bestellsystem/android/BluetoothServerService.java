@@ -5,10 +5,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
-import androidx.lifecycle.ViewModelProvider;
 import de.portugall.bestellsystem.android.data.*;
 
 import java.io.IOException;
@@ -19,13 +17,12 @@ import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 public class BluetoothServerService extends Service {
 
 	private static final String TAG = "BluetoothServerService";
 	private final ExecutorService executorService = Executors.newFixedThreadPool(2);
-	private VerkaufDao verkaufDao;
+	private VerkaufRepository verkaufRepo;
 	private final Queue<String> messageQueue = new LinkedList<>();
 	private BluetoothServerSocket serverSocket;
 
@@ -40,8 +37,7 @@ public class BluetoothServerService extends Service {
 		}
 		serverSocket = tmp;
 
-		AppDatabase db = AppDatabase.getInstance(this);
-		verkaufDao = db.verkaufDao();
+		verkaufRepo = new VerkaufRepository(this);
 	}
 
 	@Override
@@ -59,7 +55,7 @@ public class BluetoothServerService extends Service {
 								inputStream.read(buffer);
 								String message = new String(buffer, StandardCharsets.UTF_8);
 
-								verkaufDao.insert(VerkaufWithPositionen.fromJson(message));
+								verkaufRepo.insert(VerkaufWithPositionen.fromJson(message));
 								// TODO Notification, wenn die Activity nicht sichtbar ist?
 
 //								if (null != boundListener) {
