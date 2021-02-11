@@ -4,7 +4,7 @@ import androidx.room.TypeConverter;
 
 import java.time.LocalTime;
 
-public class LocalTimeConverter {
+class LocalTimeConverter {
 
 	@TypeConverter
 	public static LocalTime toTime(String timeString) {

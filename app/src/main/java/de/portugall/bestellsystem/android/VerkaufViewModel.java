@@ -4,7 +4,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import de.portugall.bestellsystem.android.data.AppDatabase;
 import de.portugall.bestellsystem.android.data.VerkaufRepository;
 import de.portugall.bestellsystem.android.data.VerkaufWithPositionen;
 

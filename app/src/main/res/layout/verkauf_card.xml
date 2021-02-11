@@ -17,30 +17,14 @@
             android:layout_height="match_parent"
             >
 
-        <LinearLayout
-                android:orientation="horizontal"
+        <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp">
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textUhrzeit"
-                    android:layout_weight="1"
-                    tools:text="13:25"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textVergangeneZeit"
-                    android:layout_weight="2"
-                    tools:text="Vor 5 Minuten"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
-        </LinearLayout>
+                android:id="@+id/textVergangeneZeit"
+                tools:text="Vor 444 Minuten"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
 
         <LinearLayout
                 android:id="@+id/listLayoutArtikel"

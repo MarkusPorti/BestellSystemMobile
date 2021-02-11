@@ -28,4 +28,10 @@ public class VerkaufRepository {
 			verkaufDao.delete(verkauf);
 		});
 	}
+
+	public void update(VerkaufWithPositionen verkauf) {
+		AppDatabase.databaseExecutor.execute(() -> {
+			verkaufDao.update(verkauf);
+		});
+	}
 }

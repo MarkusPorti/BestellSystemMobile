@@ -40,4 +40,16 @@ abstract class VerkaufDao {
 
 	@Delete
 	abstract void deletePositionen(List<VerkaufPosition> positionen);
+
+	@Transaction
+	public void update(VerkaufWithPositionen verkauf) {
+		updatePositionen(verkauf.positionen);
+		updateVerkauf(verkauf.verkauf);
+	}
+
+	@Update
+	abstract void updateVerkauf(Verkauf verkauf);
+
+	@Update
+	abstract void updatePositionen(List<VerkaufPosition> positionen);
 }

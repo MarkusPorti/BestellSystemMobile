@@ -16,6 +16,9 @@ public class Verkauf {
 	@ColumnInfo
 	private LocalTime uhrzeit;
 
+	@ColumnInfo
+	private boolean abholbereit;
+
 	public long getId() {
 		return id;
 	}
@@ -32,6 +35,14 @@ public class Verkauf {
 		this.uhrzeit = uhrzeit;
 	}
 
+	public boolean isAbholbereit() {
+		return abholbereit;
+	}
+
+	public void setAbholbereit(boolean abholbereit) {
+		this.abholbereit = abholbereit;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -39,11 +50,11 @@ public class Verkauf {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Verkauf verkauf = (Verkauf) o;
-		return id == verkauf.id && uhrzeit.equals(verkauf.uhrzeit);
+		return id == verkauf.id && uhrzeit.equals(verkauf.uhrzeit) && abholbereit == verkauf.abholbereit;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, uhrzeit);
+		return Objects.hash(id, uhrzeit, abholbereit);
 	}
 }

@@ -1,5 +1,6 @@
 package de.portugall.bestellsystem.android;
 
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import de.portugall.bestellsystem.android.data.VerkaufPosition;
+import de.portugall.bestellsystem.android.data.VerkaufRepository;
 import de.portugall.bestellsystem.android.data.VerkaufWithPositionen;
 
 import java.time.Duration;
@@ -23,6 +25,7 @@ import java.util.function.Consumer;
 public class VerkaufCardListAdapter extends ListAdapter<VerkaufWithPositionen, VerkaufCardListAdapter.VerkaufViewHolder> {
 
 	private final Consumer<VerkaufWithPositionen> onDeleteCallback;
+	private final VerkaufRepository repo;
 
 	protected VerkaufCardListAdapter(Consumer<VerkaufWithPositionen> onDeleteCallback) {
 		super(new DiffUtil.ItemCallback<VerkaufWithPositionen>() {
@@ -37,6 +40,7 @@ public class VerkaufCardListAdapter extends ListAdapter<VerkaufWithPositionen, V
 			}
 		});
 		this.onDeleteCallback = onDeleteCallback;
+		repo = new VerkaufRepository(null);
 	}
 
 	@NonNull
@@ -51,36 +55,31 @@ public class VerkaufCardListAdapter extends ListAdapter<VerkaufWithPositionen, V
 	}
 
 	public class VerkaufViewHolder extends RecyclerView.ViewHolder {
-		private final TextView textUhrzeit;
 		private final TextView textVergangeneZeit;
 		private final LinearLayout listLayoutArtikel;
 		private final MaterialButton buttonFertig;
 		private final MaterialButton buttonAbholbereit;
 		private VerkaufWithPositionen boundVerkauf;
+		private final Drawable drawable;
 
 		public VerkaufViewHolder(@NonNull ViewGroup parent) {
 			super(LayoutInflater.from(parent.getContext()).inflate(R.layout.verkauf_card, parent, false));
 
-			textUhrzeit = itemView.findViewById(R.id.textUhrzeit);
 			textVergangeneZeit = itemView.findViewById(R.id.textVergangeneZeit);
 			listLayoutArtikel = itemView.findViewById(R.id.listLayoutArtikel);
 			buttonFertig = itemView.findViewById(R.id.buttonFertig);
 			buttonFertig.setOnClickListener(eventView -> VerkaufCardListAdapter.this.onDeleteCallback.accept(boundVerkauf));
 			buttonAbholbereit = itemView.findViewById(R.id.buttonAbholbereit);
+			drawable = itemView.getResources().getDrawable(R.drawable.ic_baseline_check_24, itemView.getContext().getTheme());
 			buttonAbholbereit.setOnClickListener(eventView -> {
-				if (buttonAbholbereit.isChecked()) {
-					buttonAbholbereit.setIcon(itemView.getResources()
-												  .getDrawable(R.drawable.ic_baseline_check_24, itemView.getContext()
-																									.getTheme()));
-				} else {
-					buttonAbholbereit.setIcon(null);
-				}
+				buttonAbholbereit.setIcon(buttonAbholbereit.isChecked() ? drawable : null);
+				boundVerkauf.verkauf.setAbholbereit(buttonAbholbereit.isChecked());
+				repo.update(boundVerkauf);
 			});
 		}
 
 		public void bindTo(VerkaufWithPositionen verkaufWithPositionen) {
 			this.boundVerkauf = verkaufWithPositionen;
-			textUhrzeit.setText(verkaufWithPositionen.verkauf.getUhrzeit().toString());
 			new Timer().schedule(new TimerTask() {
 				@Override
 				public void run() {
@@ -93,11 +92,15 @@ public class VerkaufCardListAdapter extends ListAdapter<VerkaufWithPositionen, V
 					});
 				}
 			}, 0, 10000);
+
 			listLayoutArtikel.removeAllViews();
 			for (VerkaufPosition verkaufPosition : verkaufWithPositionen.positionen) {
 				ArtikelItemView positionView = new ArtikelItemView(itemView.getContext(), verkaufPosition);
 				listLayoutArtikel.addView(positionView);
 			}
+
+			buttonAbholbereit.setChecked(verkaufWithPositionen.verkauf.isAbholbereit());
+			buttonAbholbereit.setIcon(buttonAbholbereit.isChecked() ? drawable : null);
 		}
 	}
 
