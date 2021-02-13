@@ -1,6 +1,5 @@
 package de.portugall.bestellsystem.android;
 
-import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import de.portugall.bestellsystem.android.data.*;
+import de.portugall.bestellsystem.android.data.VerkaufRepository;
+import de.portugall.bestellsystem.android.data.VerkaufWithPositionen;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
 		VerkaufViewModel verkaufViewModel = new ViewModelProvider(this).get(VerkaufViewModel.class);
 		verkaufViewModel.getAllVerkaufList().observe(this, adapter::submitList);
 
-		Intent discoverableIntent =
-				new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-		discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-		startActivity(discoverableIntent);
+		//		Intent discoverableIntent =
+		//				new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+		//		discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+		//		startActivity(discoverableIntent);
 
 		Intent intent = new Intent(this, BluetoothServerService.class);
 		startService(intent);

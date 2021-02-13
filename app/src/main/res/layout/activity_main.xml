@@ -11,8 +11,9 @@
             android:id="@+id/verkaufRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:layoutAnimation="@anim/layout_animation_up"
             tools:listitem="@layout/verkauf_card"
             tools:itemCount="5"
-            android:clipToPadding="false"
             />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

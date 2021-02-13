@@ -6,7 +6,7 @@ import androidx.room.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Verkauf.class, VerkaufPosition.class}, version = 2, exportSchema = false)
+@Database(entities = {Verkauf.class, VerkaufPosition.class}, version = 1, exportSchema = false)
 @TypeConverters({LocalTimeConverter.class})
 abstract class AppDatabase extends RoomDatabase {
 
@@ -17,7 +17,8 @@ abstract class AppDatabase extends RoomDatabase {
 		if (null == INSTANCE) {
 			synchronized (AppDatabase.class) {
 				INSTANCE = Room.databaseBuilder(context, AppDatabase.class, "database")
-							   .fallbackToDestructiveMigration().build();
+							   .createFromAsset("database")
+							   .build();
 			}
 		}
 		return INSTANCE;
