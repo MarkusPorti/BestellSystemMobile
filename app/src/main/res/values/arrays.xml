@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gerichte">
+        <item>Erbsensupe</item>
+        <item>Siedewurst</item>
+        <item>Brötchen</item>
+        <item>Bratwurst im Brötchen</item>
+        <item>Spießbraten im Brötchen</item>
+        <item>Pommes</item>
+        <item>Currywurst</item>
+    </string-array>
+</resources>

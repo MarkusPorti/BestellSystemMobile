@@ -5,31 +5,29 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/main_coordinator_layout"
-        tools:context=".MainActivity">
+        android:fitsSystemWindows="true"
+        tools:context=".settings.SettingsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:theme="@style/AppTheme.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
+                app:title="@string/menu_action_settings"
+                app:menu="@menu/menu_main"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/verkaufRecyclerView"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+    <FrameLayout
+            android:id="@+id/settings_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:layoutAnimation="@anim/layout_animation_up"
-            tools:listitem="@layout/verkauf_card"
-            tools:itemCount="5"
-            />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    </FrameLayout>
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

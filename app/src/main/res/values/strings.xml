@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">BestellSystem Mobile</string>
 
+    <string name="menu_action_settings">Einstellungen</string>
+    <string name="pref_filter_list_title">Angezeigte Gerichte</string>
+
     <string name="artikel_menge">%1$dx</string>
     <string name="abholbereit">Abholbereit</string>
     <string name="fertig">Fertig</string>
