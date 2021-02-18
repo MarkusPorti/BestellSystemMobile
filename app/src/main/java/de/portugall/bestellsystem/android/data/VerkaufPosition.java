@@ -33,6 +33,9 @@ public class VerkaufPosition {
 	@ColumnInfo
 	private String artikel;
 
+	@Ignore
+	private boolean show = false;
+
 	public long getId() {
 		return id;
 	}
@@ -66,6 +69,14 @@ public class VerkaufPosition {
 
 	public void setVerkaufId(long verkaufId) {
 		this.verkaufId = verkaufId;
+	}
+
+	public boolean isShow() {
+		return show;
+	}
+
+	public void setShow(boolean show) {
+		this.show = show;
 	}
 
 	@Override
