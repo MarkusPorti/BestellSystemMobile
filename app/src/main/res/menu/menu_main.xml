@@ -2,10 +2,19 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="de.portugall.databasedemo.MainActivity">
+
+    <item
+        android:id="@+id/menu_action_bluetooth"
+        android:title="Bluetooth"
+        android:icon="@android:drawable/stat_sys_data_bluetooth"
+        android:orderInCategory="1"
+        app:showAsAction="always"/>
+
     <item
             android:id="@+id/menu_action_settings"
             android:title="@string/menu_action_settings"
             android:icon="@drawable/ic_settings"
             android:orderInCategory="100"
             app:showAsAction="ifRoom"/>
+
 </menu>

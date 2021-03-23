@@ -57,17 +57,6 @@ public class BluetoothServerService extends Service {
 
 								verkaufRepo.insert(VerkaufWithPositionen.fromJson(message));
 								// TODO Notification, wenn die Activity nicht sichtbar ist?
-
-//								if (null != boundListener) {
-//									// Da gerade eine Activity an diesen Service gebunden ist, kann sie direkt über die
-//									// neue Message informiert werden
-//									boundListener.accept(message);
-//								} else {
-//									// Gerade ist keine Activity an diesen Service gebunden. Der Listener ist null.
-//									// Einkommende Nachrichten in ihrere Reihenfolge speichern, damit sie bei einem bound
-//									// alle zu Verfügung gestellt werden können.
-//									messageQueue.add(message);
-//								}
 							} catch (IOException e) {
 								Log.e(TAG, "Background Task failed while reading the InputStream: ", e);
 								break;

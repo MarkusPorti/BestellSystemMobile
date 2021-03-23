@@ -1,5 +1,6 @@
 package de.portugall.bestellsystem.android;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -71,11 +72,6 @@ public class MainActivity extends AppCompatActivity {
 			adapter.submitList(filteredVerkaufList);
 		});
 
-		//		Intent discoverableIntent =
-		//				new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-		//		discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-		//		startActivity(discoverableIntent);
-
 		Intent intent = new Intent(this, BluetoothServerService.class);
 		startService(intent);
 	}
@@ -103,6 +99,14 @@ public class MainActivity extends AppCompatActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+
+		if (id == R.id.menu_action_bluetooth) {
+			// TODO
+			Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+			discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+			startActivity(discoverableIntent);
+			return true;
+		}
 
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.menu_action_settings) {
