@@ -14,8 +14,6 @@ import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
-	public static final String PREFERENCE_NAME = "de.portugall.bestellsystem.android_preferences";
-
 	private Toolbar toolbar;
 
 	@Override

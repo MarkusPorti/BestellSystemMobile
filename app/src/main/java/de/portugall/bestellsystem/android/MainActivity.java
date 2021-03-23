@@ -25,7 +25,6 @@ import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
 
-	private static final String TAG = "MainActivity";
 	private Snackbar snackbarVerkaufEntfernt;
 	private VerkaufWithPositionen lastDeletedVerkauf;
 	private VerkaufRepository verkaufRepo;

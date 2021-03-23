@@ -11,21 +11,16 @@ import java.util.List;
 
 public class VerkaufViewModel extends AndroidViewModel {
 
-	private final VerkaufRepository repo;
 	private final LiveData<List<VerkaufWithPositionen>> allVerkaufList;
 
 	public VerkaufViewModel(@NonNull Application application) {
 		super(application);
-		repo = new VerkaufRepository(application);
+		VerkaufRepository repo = new VerkaufRepository(application);
 		allVerkaufList = repo.getAll();
 	}
 
 	public LiveData<List<VerkaufWithPositionen>> getAllVerkaufList() {
 		return allVerkaufList;
-	}
-
-	public void insert(VerkaufWithPositionen verkauf) {
-		repo.insert(verkauf);
 	}
 
 }

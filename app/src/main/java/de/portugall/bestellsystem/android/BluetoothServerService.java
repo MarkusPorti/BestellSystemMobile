@@ -7,13 +7,12 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
-import de.portugall.bestellsystem.android.data.*;
+import de.portugall.bestellsystem.android.data.VerkaufRepository;
+import de.portugall.bestellsystem.android.data.VerkaufWithPositionen;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,7 +22,6 @@ public class BluetoothServerService extends Service {
 	private static final String TAG = "BluetoothServerService";
 	private final ExecutorService executorService = Executors.newFixedThreadPool(2);
 	private VerkaufRepository verkaufRepo;
-	private final Queue<String> messageQueue = new LinkedList<>();
 	private BluetoothServerSocket serverSocket;
 
 	@Override
