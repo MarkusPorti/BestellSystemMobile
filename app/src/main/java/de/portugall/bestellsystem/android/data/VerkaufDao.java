@@ -19,10 +19,10 @@ abstract class VerkaufDao {
 		insertPositionen(verkauf.positionen);
 	}
 
-	@Insert
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	abstract void insertVerkauf(Verkauf verkauf);
 
-	@Insert
+	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	abstract void insertPositionen(List<VerkaufPosition> positionen);
 
 	@Transaction
