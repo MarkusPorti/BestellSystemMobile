@@ -1,6 +1,5 @@
 package de.portugall.bestellsystem.android;
 
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,22 +55,24 @@ public class VerkaufCardListAdapter extends ListAdapter<VerkaufWithPositionen, V
 	}
 
 	public class VerkaufViewHolder extends RecyclerView.ViewHolder {
-		private final SharedPreferences preferences;
 		private final TextView textVergangeneZeit;
 		private final LinearLayout listLayoutArtikel;
-		private final MaterialButton buttonFertig;
 		private final MaterialButton buttonAbholbereit;
 		private final Drawable drawable;
+		private Timer timer = new Timer();
 		private VerkaufWithPositionen boundVerkauf;
 
 		public VerkaufViewHolder(@NonNull ViewGroup parent) {
 			super(LayoutInflater.from(parent.getContext()).inflate(R.layout.verkauf_card, parent, false));
-			preferences = PreferenceManager.getDefaultSharedPreferences(parent.getContext());
 
 			textVergangeneZeit = itemView.findViewById(R.id.textVergangeneZeit);
 			listLayoutArtikel = itemView.findViewById(R.id.listLayoutArtikel);
-			buttonFertig = itemView.findViewById(R.id.buttonFertig);
-			buttonFertig.setOnClickListener(eventView -> VerkaufCardListAdapter.this.onDeleteCallback.accept(boundVerkauf));
+			MaterialButton buttonFertig = itemView.findViewById(R.id.buttonFertig);
+			buttonFertig.setOnClickListener(eventView -> {
+				VerkaufCardListAdapter.this.onDeleteCallback.accept(boundVerkauf);
+				timer.cancel();
+				timer.purge();
+			});
 			buttonAbholbereit = itemView.findViewById(R.id.buttonAbholbereit);
 			drawable = itemView.getResources()
 							   .getDrawable(R.drawable.ic_baseline_check_24, itemView.getContext().getTheme());
@@ -85,7 +85,9 @@ public class VerkaufCardListAdapter extends ListAdapter<VerkaufWithPositionen, V
 
 		public void bindTo(VerkaufWithPositionen verkaufWithPositionen) {
 			this.boundVerkauf = verkaufWithPositionen;
-			new Timer().schedule(new TimerTask() {
+			timer.cancel();
+			timer = new Timer();
+			timer.schedule(new TimerTask() {
 				@Override
 				public void run() {
 					Duration duration = Duration.between(verkaufWithPositionen.verkauf.getUhrzeit(), LocalTime.now());
